@@ -27,6 +27,7 @@ module ActiveDynamic
     end
 
     attr_writer :provider_class, :resolve_persisted
+    attr_writer :provider_class, :resolve_from_provider
 
   end
 end
