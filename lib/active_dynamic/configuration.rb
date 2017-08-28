@@ -19,7 +19,11 @@ module ActiveDynamic
     end
 
     def resolve_persisted
-      @resolve_persisted || false
+      @resolve_persisted || true
+    end
+
+    def resolve_from_provider
+      @resolve_from_provider || false
     end
 
     attr_writer :provider_class, :resolve_persisted

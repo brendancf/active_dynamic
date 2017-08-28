@@ -13,7 +13,15 @@ module ActiveDynamic
 
     def dynamic_attributes
       if persisted? && any_dynamic_attributes?
-        should_resolve_persisted? ? resolve_combined : resolve_from_db
+        if should_resolve_persisted? && should_resolve_from_provider?
+          resolve_combined
+        elsif should_resolve_persisted?
+          resolve_from_db
+        elsif should_resolve_from_provider?
+          resolve_from_provider
+        else
+          # No dynamic attributes are to be loaded
+        end
       else
         resolve_from_provider
       end
@@ -42,6 +50,18 @@ module ActiveDynamic
     end
 
     private
+
+    def should_resolve_from_provider?
+      value = ActiveDynamic.configuration.resolve_from_provider
+      case value
+        when TrueClass, FalseClass
+          value
+        when Proc
+          value.call(self)
+        else
+          raise "Invalid configuration for resolve_from_provider. Value should be Bool or Proc, got #{value.class}"
+      end
+    end
 
     def should_resolve_persisted?
       value = ActiveDynamic.configuration.resolve_persisted
