@@ -13,15 +13,7 @@ module ActiveDynamic
 
     def dynamic_attributes
       if persisted? && any_dynamic_attributes?
-        if should_resolve_persisted? && should_resolve_from_provider?
-          resolve_combined
-        elsif should_resolve_persisted?
-          resolve_from_db
-        elsif should_resolve_from_provider?
-          resolve_from_provider
-        else
-          # No dynamic attributes are to be loaded
-        end
+        should_resolve_persisted? ? resolve_combined : resolve_from_db
       else
         resolve_from_provider
       end

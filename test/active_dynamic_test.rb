@@ -6,7 +6,7 @@ class ActiveDynamicTest < Minitest::Test
   def setup
     ActiveDynamic.configure do |config|
       config.provider_class = ProfileAttributeProvider
-      config.resolve_persisted = false
+      config.resolve_persisted = true
     end
 
     @profile = Profile.new
