@@ -9,7 +9,7 @@ module ActiveDynamic
       @display_name = display_name
       @datatype = options.delete(:datatype)
       @value = options.delete(:default_value)
-      @required = options.delete(:required)
+      @required = options.include?(:required) ? options.delete(:required) : false
 
       # custom attributes from Provider
       options.each do |key, value|
