@@ -81,8 +81,8 @@ module ActiveDynamic
 
     def resolve_combined
       attributes = resolve_from_db
-      resolve_from_provider.each do |attribute|
-        attributes << ActiveDynamic::Attribute.new(attribute.as_json) unless attributes.find { |attr| attr.name == attribute.name }
+      resolve_from_provider.each do |attribute_definition|
+        attributes.build(attribute_definition.as_json) unless attributes.find { |attr| attr.name == attribute_definition.name }
       end
       attributes
     end
